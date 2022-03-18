@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">rninstadatingfire</string>
+    
+    <string name="facebook_app_id">291557586435988</string>
+    <string name="fb_login_protocol_scheme">fb291557586435988</string>
+    <string name="facebook_client_token">5ef76b82ab0f71f4ee925ea8861bf900</string>
+
+
+</resources>
