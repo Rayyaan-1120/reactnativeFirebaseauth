@@ -6,15 +6,24 @@ import {
   Dimensions,
   TextInput,
 } from 'react-native';
-import React from 'react';
+import React,{useContext} from 'react';
 import {colors} from '../components/theme';
 import Button from '../components/button';
+import { User } from '../components/Context';
 
 const {width, height} = Dimensions.get('window');
 
 const NameScreen = ({navigation}) => {
   const [isActive, setActive] = React.useState(false);
   const [input, setinput] = React.useState('');
+
+  const {user,setuser} = useContext(User)
+  console.log(user);
+
+  const addnameintostate = () => {
+     setuser({...user,tinderName:input})
+     navigation.navigate('BirthdayScreen')
+  }
 
   return (
     <SafeAreaView
@@ -56,7 +65,7 @@ const NameScreen = ({navigation}) => {
             bg={input.length > 3 ? colors.red : colors.lightgrey}
             color={input.length > 3 ? '#fff' : colors.darkgrey}
             text={'I agree'}
-            func={() => navigation.navigate('BirthdayScreen')}
+            func={addnameintostate}
           />
         </View>
       </View>

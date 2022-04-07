@@ -14,12 +14,11 @@ const OtpScreen = ({route,navigation}) => {
 
     const CELL_COUNT = 6;
 
-
     const [code,setcode] = React.useState('')
 
     const {user,setuser} = useContext(User)
 
-    console.log(user)
+    console.log(user.confirmation)
 
     const [value, setValue] = useState('');
   const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
@@ -29,21 +28,20 @@ const OtpScreen = ({route,navigation}) => {
   });
 
 
-
+  console.log(value);
 
     async function confirmCode() {
 
-        if(value.length < 6 || value.length > 6){
-            return alert('please enter the valid code')
-        }
+        // if(value.length < 6 || value.length > 6){
+        //     return alert('please enter the valid code')
+        // }
 
               try {
-                await confirming.confirm(value);
-                alert('confirmed')
-                navigation.navigate('HomeScreen',{
-                    phoneNumber:value
-                })
+                await user?.confirmation.confirm(value);
+                alert('Your Phone Number is Verified')
+                navigation.navigate('AgreementScreen')
               } catch (error) {
+              console.log(error);
                 alert('Invalid code.');
               }
             }
@@ -56,7 +54,7 @@ const OtpScreen = ({route,navigation}) => {
       </View>
     <View style={{alignItems: "center",width:width}}>
       <View style={styles.resendcontainer}>
-           <Text style={[styles.texttwo,{marginRight:10}]}>{user?.phoneNumber ? user.phoneNumber.slice(1) : '923089771679'}</Text>
+           <Text style={[styles.texttwo,{marginRight:10}]}>{user?.phoneNumber ? user.phoneNumber.slice(1) : ''}</Text>
            <TouchableOpacity style={[styles.resendbtn]}>
                <Text style={[styles.texttwo,{paddingHorizontal:10}]}>Resend</Text>
            </TouchableOpacity>
@@ -84,7 +82,7 @@ const OtpScreen = ({route,navigation}) => {
               )}
             />
             </View>
-      <TouchableOpacity disabled={value.length > 0 ? false : true} style={[styles.btn,{backgroundColor:value.length > 0 ? '#ea3c53' : '#d3d3d3'}]} onPress={() => navigation.navigate('AgreementScreen')}>
+      <TouchableOpacity disabled={value.length > 0 ? false : true} style={[styles.btn,{backgroundColor:value.length > 0 ? '#ea3c53' : '#d3d3d3'}]} onPress={() => confirmCode()}>
          <Text style={[styles.texttwo,{color:value.length > 0 ? '#fff' : '#696969'}]}>Continue</Text>
       </TouchableOpacity>
     </View>

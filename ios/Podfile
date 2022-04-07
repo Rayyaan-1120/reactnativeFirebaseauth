@@ -14,6 +14,8 @@ target 'rninstadatingfire' do
 
 
 
+  pod 'RNFBStorage', :path => '../node_modules/@react-native-firebase/storage'
+
   target 'rninstadatingfireTests' do
     inherit! :complete
     # Pods for testing

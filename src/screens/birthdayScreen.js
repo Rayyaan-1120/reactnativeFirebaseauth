@@ -2,6 +2,7 @@ import { StyleSheet, Text, View,Dimensions,SafeAreaView,TextInput } from 'react-
 import React from 'react'
 import { colors } from '../components/theme';
 import Button from '../components/button';
+import { User } from '../components/Context';
 
 const {width, height} = Dimensions.get('window');
 
@@ -11,6 +12,16 @@ const BirthdayScreen = ({navigation}) => {
     const [input,setinput] = React.useState('')
     const [inputtwo,setinputtwo] = React.useState('')
     const [inputthree,setinputthree] = React.useState('')
+
+    const {user,setuser} = React.useContext(User)
+
+    const addbirthdaytostate = () => {
+      if(input.length < 2 || inputtwo.length < 2 || inputthree.length < 4){
+        return alert('Please enter the Right Date Format')
+      }
+      setuser({...user,birthday:`${inputthree}-${inputtwo}-${input}`})
+      navigation.navigate('GenderScreen')
+    }
 
   return (
     <SafeAreaView
@@ -40,7 +51,7 @@ const BirthdayScreen = ({navigation}) => {
             // onBlur={() => setActive(false)}
             value={`${input}`}
             onChangeText={value => {
-                if(value.length > 2 || value < 0){
+                if(value.length > 2 || value < 0 || value > 31){
                     return
                 }
                 setinput(value)}
@@ -55,7 +66,7 @@ const BirthdayScreen = ({navigation}) => {
             // onBlur={() => setActive(false)}
             value={`${inputtwo}`}
             onChangeText={value => {
-                if(value.length > 2 || value < 0){
+                if(value.length > 2 || value < 0 || value > 12){
                     return
                 }
                 setinputtwo(value)}
@@ -85,7 +96,7 @@ const BirthdayScreen = ({navigation}) => {
           </Text>
         </View>
 <View style={{paddingVertical:20}}>
-          <Button bg={colors.red} color={'#fff'} text="Continue" func={() => navigation.navigate('GenderScreen')}/>
+          <Button bg={colors.red} color={'#fff'} text="Continue" func={addbirthdaytostate}/>
         </View>
         </View>
     </SafeAreaView>

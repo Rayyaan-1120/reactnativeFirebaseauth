@@ -10,12 +10,24 @@ import React,{useState} from 'react';
 import {colors} from '../components/theme';
 import Button from '../components/button';
 import CheckBox from 'react-native-check-box'
+import { User } from '../components/Context';
 
 const {width, height} = Dimensions.get('window');
 
 const GenderScreen = ({navigation}) => {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [gender,setgender] = useState('')
+
+  const {user,setuser} = React.useContext(User)
+  console.log(user);
+
+  const addgendertostate = () => {
+    if(gender === ''){
+      return alert('Please select Your Gender')
+    }
+    setuser({...user,gender:gender,showgender:toggleCheckBox})
+    navigation.navigate('UniversityScreen')
+  }
 
   return (
     <SafeAreaView
@@ -57,7 +69,7 @@ const GenderScreen = ({navigation}) => {
 />
             <Text style={styles.textthree}>Show my gender on my profile</Text>
           </View>
-          <Button color={'#fff'} bg={colors.red} text="Continue" func={() => navigation.navigate('UniversityScreen')}/>
+          <Button color={'#fff'} bg={colors.red} text="Continue" func={addgendertostate}/>
         </View>
       </View>
     </SafeAreaView>

@@ -9,6 +9,8 @@ import {
 import { GoogleSignin,GoogleSigninButton,statusCodes } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import { User } from '../components/Context';
+import firestore from '@react-native-firebase/firestore'
+
 
 
 const {width,height} = Dimensions.get('window')
@@ -25,10 +27,15 @@ const LoginScreen = ({navigation}) => {
         try {
           await GoogleSignin.hasPlayServices();
           const userInfo = await GoogleSignin.signIn();
-          setuser(userInfo.user)
-          navigation.navigate('PhoneNumberInput',{
-            data:userInfo?.user
-          })
+
+          const existuser = await firestore().collection('Users').doc(userInfo.user.id).get()
+          if(existuser.exists){
+            setuser(existuser.data())
+            navigation.navigate('HomeScreen')
+          }else{
+            setuser({...user,userInfo:userInfo.user,signedwithgoogle:true})
+            navigation.navigate('PhoneNumberInput')
+          }
           // this.setState({ userInfo });
         } catch (error) {
           if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -74,10 +81,10 @@ const LoginScreen = ({navigation}) => {
     
           console.log('Signed in with fb')
 
-          navigation.navigate('HomeScreen',{
-            provider:"FaceBook",
-            token:data.accessToken
-          })
+          // navigation.navigate('HomeScreen',{
+          //   provider:"FaceBook",
+          //   token:data.accessToken
+          // })
         }catch (error) {
            console.log(error)
         }

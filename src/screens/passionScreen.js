@@ -10,6 +10,7 @@ import {
   import React, { useState } from 'react';
   import {colors} from '../components/theme';
   import Button from '../components/button';
+import { User } from '../components/Context';
   
   const {width, height} = Dimensions.get('window');
 
@@ -126,6 +127,14 @@ import {
 
     const [passion,setpassion] = useState([])
 
+   const {user,setuser} = React.useContext(User)
+
+   const addpassionstostate = () => {
+       setuser({...user,passion: passion})
+       navigation.navigate("ImageScreen")
+   }
+
+
     console.log(passion)
     
   
@@ -170,7 +179,7 @@ import {
             
         </View>
         <View style={{paddingVertical:20}}>
-        <TouchableOpacity disabled={passion.length < 5} style={[styles.btntwo,{backgroundColor:passion.length === 5 ? colors.red : colors.lightgrey}]} >
+        <TouchableOpacity onPress={addpassionstostate} disabled={passion.length < 5} style={[styles.btntwo,{backgroundColor:passion.length === 5 ? colors.red : colors.lightgrey}]} >
         
         <Text style={[styles.textthree,{color:passion.length === 5 ? '#fff' : colors.darkgrey}]}>Continue {passion.length}/5</Text>
      </TouchableOpacity>

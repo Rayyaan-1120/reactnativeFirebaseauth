@@ -1,5 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {Text,TouchableOpacity} from 'react-native'
 import LoginScreen from './loginScreen';
 import HomeScreen from './homeScreen';
 import PhoneNumberInput from './phoneNumberInput';
@@ -10,13 +11,16 @@ import BirthdayScreen from './birthdayScreen';
 import GenderScreen from './genderScreen';
 import UniversityScreen from './universityScreen';
 import PassionScreen from './passionScreen';
+import {colors} from '../components/theme';
+import ImageScreen from './imageScreen';
+
 
 const Stack = createNativeStackNavigator();
 
 const MainStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Otp"
+    // initialRouteName='ImageScreen'
      >
       <Stack.Screen
         name="LoginScreen"
@@ -60,9 +64,20 @@ const MainStack = () => {
         options={{headerTitle: '',headerShadowVisible:false}}
       />
       <Stack.Screen
+        name="ImageScreen"
+        component={ImageScreen}
+        options={{headerTitle: '',headerShadowVisible:false}}
+      />
+      <Stack.Screen
         name="PassionScreen"
         component={PassionScreen}
-        options={{headerTitle: '',headerShadowVisible:false}}
+        options={{headerTitle: '',headerShadowVisible:false,headerRight:() => {
+          return (
+            <TouchableOpacity>
+              <Text style={{fontSize:20,fontWeight:"600",color:colors.grey}}>Skip</Text>
+            </TouchableOpacity>
+          )
+        }}}
       />
     </Stack.Navigator>
   );

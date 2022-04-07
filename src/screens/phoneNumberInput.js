@@ -38,14 +38,14 @@ const PhoneNumberInput = ({navigation}) => {
         
 
             const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
-            console.log(confirmation)
-            setConfirm(confirmation);
+            console.log(confirmation,'I am confirmation')
+            
           
             setloading(false)
             navigation.setOptions({
                 headerShown:true
             })
-            setuser({...user,phoneNumber:phoneNumber})
+            setuser({...user,phoneNumber:phoneNumber,confirmation:confirmation})
 
             navigation.navigate('Otp')
         }catch(e){

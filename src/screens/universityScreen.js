@@ -9,12 +9,25 @@ import {
   import React from 'react';
   import {colors} from '../components/theme';
   import Button from '../components/button';
+import { User } from '../components/Context';
+
   
   const {width, height} = Dimensions.get('window');
   
   const UniversityScreen = ({navigation}) => {
     const [isActive, setActive] = React.useState(false);
     const [input, setinput] = React.useState('');
+
+    const {user,setuser} = React.useContext(User)
+  console.log(user);
+
+  const addunitostate = () => {
+    if(input === ''){
+      return alert('Please select Your University')
+    }
+    setuser({...user,university:input})
+    navigation.navigate('PassionScreen')
+  }
   
     return (
       <SafeAreaView
@@ -56,7 +69,7 @@ import {
               bg={input.length > 3 ? colors.red : colors.lightgrey}
               color={input.length > 3 ? '#fff' : colors.darkgrey}
               text={'I agree'}
-              func={() => navigation.navigate('PassionScreen')}
+              func={addunitostate}
             />
           </View>
         </View>
